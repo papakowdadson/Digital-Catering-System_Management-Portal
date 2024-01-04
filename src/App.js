@@ -1,24 +1,23 @@
 import logo from './logo.svg';
+import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
 import './App.css';
+import OrdersPage from './pages/OrdersPage';
+import ManagementPage from './pages/ManagementPage';
+import GenQrPage from './pages/GenQrPage';
+import Nav from './components/Nav';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+      <Nav/>
+        <Routes>      
+          <Route path='/' element={<OrdersPage/>}/>
+          <Route path='/mgt' element={<ManagementPage/>}/>
+          <Route path='/genqr' element={<GenQrPage/>}/>
+        </Routes>
+      </Router>
+    </>
   );
 }
 
