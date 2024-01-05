@@ -19,8 +19,8 @@ const Nav = () => {
         K<span className=" text-blue-400">Foods</span> 
       </div>
       <div className="w-6/12 flex justify-evenly border rounded p-2">
-      {NavData.map((data) => (
-        <NavLink to={data.link} className={({isActive})=> isActive? "rounded border pl-1 pr-1 font-semibold border-blue" : "pl-1 pr-1"}>
+      {NavData.map((data,index) => (
+        <NavLink key={index} to={data.link} className={({isActive})=> isActive? "rounded border pl-1 pr-1 font-semibold border-blue" : "pl-1 pr-1"}>
           {data.label}
         </NavLink>
       ))}
