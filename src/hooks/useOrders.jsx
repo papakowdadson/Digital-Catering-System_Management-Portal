@@ -1,38 +1,60 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { OrdersData } from "../data";
+import { UserContext } from "../context/userContext";
 
+const useOrders = () => {
+  const { user } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
+  const [allOrder, setAllOrders] = useState([]);
 
-const useOrders = () =>{
-    const [loading,setLoading] = useState(true)
-    const [allOrder,setAllOrders] = useState([]);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    useEffect(()=>{
-        fetchData();
-    },[])
-
-    const fetchData = async() => {
-        setLoading(true)
-        try {
-        //     const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/orders/`);
-        // if(response.status==200){
-        //     setAllOrders(response.data)
-        //     setLoading(false)
-        // }
-        setAllOrders(OrdersData)
-        setLoading(false);
-        } catch (error) {
-            setLoading(false)  
+  const fetchData = async () => {
+    console.log("access token", user.accessToken);
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/api/orders/`,
+        {
+          headers: {
+            Authorization: "Bearer " + user.accessToken,
+          },
         }
-        
+      );
+      if (response.status == 200) {
+        setAllOrders(response.data);
+        setLoading(false);
+      }
+      // setAllOrders(OrdersData)
+      setLoading(false);
+    } catch (error) {
+      console.log("fetch data error", error);
+      setLoading(false);
     }
+  };
 
-    return {
-        allOrder,
-        setAllOrders,
-        loading,
-    }
+  const acceptOrders = (_id) => {
+    console.log("===========filtering orders===========");
+    setAllOrders((prev) =>
+      prev.map((item) => {
+        if (item._id === _id) {
+          return { ...item, Status: "accepted" };
+        } else {
+          return item;
+        }
+      })
+    );
+  };
 
-}
+  return {
+    allOrder,
+    setAllOrders,
+    loading,
+    acceptOrders,
+  };
+};
 
 export default useOrders;

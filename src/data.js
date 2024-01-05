@@ -1,4 +1,4 @@
-export const NavData = [{'label':'Orders','link':'/'},{'label':'Management','link':'/mgt'},{'label':'GenQR','link':'/genqr'},]
+export const NavData = [{'label':'Orders','link':'/orders'},{'label':'Management','link':'/mgt'},{'label':'GenQR','link':'/genqr'},]
 export const OrdersData = [
     {
         "_id": "659673a8d26208a30f49cf92",
@@ -51,7 +51,7 @@ export const OrdersData = [
         "address": {
             "city": "In-house"
         },
-        "Status": "pending",
+        "Status": "accepted",
         "createdAt": "2024-01-04T09:01:23.754Z",
         "updatedAt": "2024-01-04T09:01:23.754Z",
         "__v": 0

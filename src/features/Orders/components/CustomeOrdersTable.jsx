@@ -35,9 +35,11 @@ const ExpandCell = ({
 
 const renderRowExpanded = (rowData) => {
   return (
-    <div>
-      {rowData.products.map((product) => (
-        <div className="mb-4">
+    <div className="overflow-y-scroll" style={{
+      height:120
+    }}>
+      {rowData.products.map((product,index) => (
+        <div className="mb-4" key={index}>
           <div
             style={{
               width: 60,
@@ -102,11 +104,10 @@ export default function CustomOrdersTable({
   const ButtonCell = ({ rowData, dataKey, ...props }) => (
     <Cell {...props}>
       <Button
-        onClick={() => myFunction(rowData[dataKey])}
-        appearance="primary"
-        color="grey"
+        onClick={() =>rowData['Status']==='pending'?myFunction(rowData[dataKey]):null}
+        appearance={rowData['Status']==='pending'?"primary":'default'}
       >
-        {actionText}
+        {rowData['Status']==='pending'?actionText:'Accepted'}
       </Button>
     </Cell>
   );
@@ -120,13 +121,13 @@ export default function CustomOrdersTable({
         loading={loading}
         rowKey={rowKey}
         expandedRowKeys={expandedRowKeys}
-        rowExpandedHeight={300}
+        rowExpandedHeight={120}
         onRowClick={(data) => {
           console.log(data);
         }}
         renderRowExpanded={renderRowExpanded}
       >
-        <Column width={70} align="center" flexGrow={1} fullText={true} fixed>
+        <Column width={50} align="center"fullText={true} fixed>
           <HeaderCell>#</HeaderCell>
           <ExpandCell
             dataKey="_id"
@@ -135,17 +136,25 @@ export default function CustomOrdersTable({
           />
         </Column>
 
-        {/* <Column minWidth={150} flexGrow={1}  align="left" fullText={true} fixed>
-          <HeaderCell>Order No</HeaderCell>
-          <Cell dataKey="_id" />
-        </Column> */}
 
-        <Column minWidth={450} flexGrow={2} align="left" fullText={true}>
+        <Column minWidth={250} flexGrow={2} align="left" fullText={true}>
           <HeaderCell>Owner</HeaderCell>
           <Cell dataKey="userId" />
         </Column>
 
-        <Column minWidth={100} flexGrow={1} align="left" fullText={true}>
+        <Column minWidth={90} flexGrow={2} align="left" fullText={true}>
+          <HeaderCell>Location</HeaderCell>
+          <Cell dataKey="address.city" />
+        </Column>
+
+        <Column minWidth={80} flexGrow={1}  align="left" fullText={true}>
+          <HeaderCell>Amount(GHS)</HeaderCell>
+          <Cell dataKey="amount" />
+        </Column> 
+
+
+
+        <Column minWidth={80} flexGrow={1} align="left" fullText={true}>
           <HeaderCell>Status</HeaderCell>
           <Cell dataKey="Status" />
         </Column>
