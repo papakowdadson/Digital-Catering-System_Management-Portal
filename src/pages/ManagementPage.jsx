@@ -1,19 +1,35 @@
 import { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../context/userContext";
+import { toast } from "react-toastify";
 
 const ManagementPage = () => {
-    const {user} = useContext(UserContext)
+  const { user } = useContext(UserContext);
   const [product, setProduct] = useState({
     title: "",
     desc: "",
     img: "",
-    categories: "",
-    size: "",
+    categories: "Breakfast",
+    size: "Small",
     color: "black",
     price: "",
     owner: "",
   });
+  const [isChecked, setIsChecked] = useState({
+    isBreakfast: true,
+    isLunch: false,
+    isSupper: false,
+    isSmall: true,
+    isLarge: false,
+  });
+
+  const { isBreakfast, isLunch, isSupper, isSmall, isLarge } = isChecked;
+
+  const handleCheckboxChange = (e) => {
+    console.log("type", e.target.name);
+    setIsChecked((prev) => ({ ...prev, [e.target.name]: e.target.checked }));
+    // Do something with the new checkbox state (isChecked)
+  };
 
   const { title, desc, img, categories, size, color, price } = product;
 
@@ -21,42 +37,53 @@ const ManagementPage = () => {
     e.preventDefault();
     console.log(`${[e.target.id]} :${e.target.value}`);
     setProduct((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+    if (e.target.type == "checkbox") {
+      handleCheckboxChange(e);
+    }
   };
 
   const handleAddDish = async (e) => {
     e.preventDefault();
+    console.log(product);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/products/create`,
-        product,{
-            headers: {
-              Authorization: "Bearer " + user.accessToken,
-            },
-          }
+        product,
+        {
+          headers: {
+            Authorization: "Bearer " + user.accessToken,
+          },
+        }
       );
       if (response.status === 200) {
         console.log("add res", response);
+        toast.error("Couldn't Add Dish", {
+          position: toast.POSITION.TOP_CENTER,
+        });
         setProduct({
           title: "",
           desc: "",
           img: "",
-          categories: "",
-          size: "",
+          categories: "Breakfast",
+          size: "Small",
           color: "black",
           price: "",
-          owner: "",
+          owner: "admin",
         });
       }
     } catch (error) {
+      toast.error("Couldn't Add Dish", {
+        position: toast.POSITION.TOP_CENTER,
+      });
       console.log("error", error);
     }
   };
 
   return (
     <div className="pt-1 pr-1 pl-1 flex flex-col">
-      <p className="text-center">Add a dish</p>
+      <p className="text-center font-medium">Add a dish</p>
       <form onSubmit={handleAddDish} className="flex flex-col w-6/12 m-auto">
-        <div className="flex flex-col">
+        <div className="flex flex-col mb-2">
           <label htmlFor="title">Dish Name</label>
           <input
             id="title"
@@ -65,10 +92,11 @@ const ManagementPage = () => {
             value={title}
             onChange={handleChange}
             placeholder="Enter dish name"
+            class="border focus:border-black outline-none px-4 py-2 rounded-lg"
             required
           />
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col mb-2">
           <label htmlFor="desc">Dish Describtion</label>
 
           <input
@@ -78,10 +106,11 @@ const ManagementPage = () => {
             value={desc}
             onChange={handleChange}
             placeholder="Enter dish description"
+            class="border focus:border-black outline-none px-4 py-2 rounded-lg"
             required
           />
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col mb-2">
           <label htmlFor="img">Dish Image URL</label>
 
           <input
@@ -91,17 +120,19 @@ const ManagementPage = () => {
             value={img}
             onChange={handleChange}
             placeholder="Enter image url"
+            class="border focus:border-black outline-none px-4 py-2 rounded-lg"
             required
           />
         </div>
         <p>Select Dish Category</p>
-        <div className="flex">
+        <div className="flex mb-2">
           <div className="flex mr-1">
             <input
               id="categories"
               type="checkbox"
               value="Breakfast"
-              checked={categories === "Breakfast"}
+              name="isBreakfast"
+              checked={isBreakfast}
               onChange={handleChange}
             />
             <label>Breakfast</label>
@@ -110,8 +141,9 @@ const ManagementPage = () => {
             <input
               id="categories"
               type="checkbox"
+              name="isLunch"
               value="Lunch"
-              checked={categories === "Lunch"}
+              checked={isLunch}
               onChange={handleChange}
             />
             <label>Lunch</label>
@@ -121,21 +153,22 @@ const ManagementPage = () => {
               id="categories"
               type="checkbox"
               value="Supper"
-              checked={categories === "Supper"}
+              name="isSupper"
+              checked={isSupper}
               onChange={handleChange}
             />
             <label>Supper</label>
           </div>
         </div>
         <p>Select Dish Size</p>
-        <div className="flex">
+        <div className="flex mb-2">
           <div className="flex mr-1">
             <input
               id="size"
               type="checkbox"
               value="Small"
-              checked={size === "Small"}
-              //   onChange={}
+              name="isSmall"
+              checked={isSmall}
               onChange={handleChange}
             />
             <label>Small</label>
@@ -145,8 +178,8 @@ const ManagementPage = () => {
               id="size"
               type="checkbox"
               value="Large"
-              checked={size === "Large"}
-              //   onChange={handleChange}
+              name="isLarge"
+              checked={isLarge}
               onChange={handleChange}
             />
             <label>Large</label>
@@ -161,6 +194,7 @@ const ManagementPage = () => {
             value={price}
             onChange={handleChange}
             placeholder="Enter Price"
+            class="border focus:border-black outline-none px-4 py-2 rounded-lg"
             required
           />
         </div>
