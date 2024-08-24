@@ -24,6 +24,7 @@ const ManagementPage = () => {
 
       if (name === "categories") {
         if (checked) {
+          console.log("checkb0x value", value);
           newCategories.push(value);
         } else {
           const index = newCategories.indexOf(value);
@@ -31,14 +32,13 @@ const ManagementPage = () => {
             newCategories.splice(index, 1);
           }
         }
-        return { ...prev, categories: newCategories };
       }
 
       if (name === "size") {
-        return { ...prev, size: checked ? value : "" };
+        newSize = checked ? value : "";
       }
-
-      return prev;
+      
+      return { ...prev, size: checked ? value : "", categories: newCategories };
     });
   };
 
@@ -140,7 +140,7 @@ const ManagementPage = () => {
         <div className="flex mb-2">
           <div className="flex mr-3">
             <input
-              id="categories"
+              id="breakfast"
               type="checkbox"
               value="Breakfast"
               name="categories"
@@ -151,7 +151,7 @@ const ManagementPage = () => {
           </div>
           <div className="flex mr-3">
             <input
-              id="categories"
+              id="lunch"
               type="checkbox"
               name="categories"
               value="Lunch"
@@ -162,7 +162,7 @@ const ManagementPage = () => {
           </div>
           <div className="flex mr-3">
             <input
-              id="categories"
+              id="supper"
               type="checkbox"
               value="Supper"
               name="categories"
@@ -176,7 +176,7 @@ const ManagementPage = () => {
         <div className="flex mb-2">
           <div className="flex mr-3">
             <input
-              id="size"
+              id="small"
               type="checkbox"
               value="Small"
               name="size"
@@ -187,7 +187,7 @@ const ManagementPage = () => {
           </div>
           <div className="flex mr-3">
             <input
-              id="size"
+              id="large"
               type="checkbox"
               value="Large"
               name="size"
@@ -219,7 +219,6 @@ const ManagementPage = () => {
 
       <p className="text-center font-medium mb-2 mt-4">Store Listing</p>
       <p className="text-center">Coming Soon</p>
-
     </div>
   );
 };
