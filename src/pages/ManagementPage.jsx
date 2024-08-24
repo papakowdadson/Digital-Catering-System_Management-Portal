@@ -126,7 +126,7 @@ const ManagementPage = () => {
         </div>
         <p>Select Dish Category</p>
         <div className="flex mb-2">
-          <div className="flex mr-1">
+          <div className="flex mr-3">
             <input
               id="categories"
               type="checkbox"
@@ -135,9 +135,9 @@ const ManagementPage = () => {
               checked={isBreakfast}
               onChange={handleChange}
             />
-            <label>Breakfast</label>
+            <label className="ml-2" >Breakfast</label>
           </div>
-          <div className="flex mr-1">
+          <div className="flex mr-3">
             <input
               id="categories"
               type="checkbox"
@@ -146,9 +146,9 @@ const ManagementPage = () => {
               checked={isLunch}
               onChange={handleChange}
             />
-            <label>Lunch</label>
+            <label className="ml-2">Lunch</label>
           </div>
-          <div className="flex mr-1">
+          <div className="flex mr-3">
             <input
               id="categories"
               type="checkbox"
@@ -157,12 +157,12 @@ const ManagementPage = () => {
               checked={isSupper}
               onChange={handleChange}
             />
-            <label>Supper</label>
+            <label className="ml-2">Supper</label>
           </div>
         </div>
         <p>Select Dish Size</p>
         <div className="flex mb-2">
-          <div className="flex mr-1">
+          <div className="flex mr-3">
             <input
               id="size"
               type="checkbox"
@@ -171,9 +171,9 @@ const ManagementPage = () => {
               checked={isSmall}
               onChange={handleChange}
             />
-            <label>Small</label>
+            <label className="ml-2">Small</label>
           </div>
-          <div className="flex mr-1">
+          <div className="flex mr-3">
             <input
               id="size"
               type="checkbox"
@@ -182,7 +182,7 @@ const ManagementPage = () => {
               checked={isLarge}
               onChange={handleChange}
             />
-            <label>Large</label>
+            <label className="ml-2">Large</label>
           </div>
         </div>
         <div className="flex flex-col mb-2">
@@ -201,7 +201,7 @@ const ManagementPage = () => {
         <input
           type="submit"
           value="Add Dish"
-          className="rounded bg-black text-white mt-2"
+          className=" rounded-lg bg-black text-white p-3 mt-4"
         />
       </form>
     </div>

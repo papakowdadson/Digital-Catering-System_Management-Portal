@@ -38,15 +38,15 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="flex h-svh">
+        <div className="flex h-screen">
         
-            <form onSubmit={handleLogin} className="rounded-lg border flex flex-col m-auto w-6/12 h-2/6 p-4 min-w-96 max-w-xl">
+            <form onSubmit={handleLogin} className="rounded-lg border flex flex-col m-auto w-full p-4 min-w-96 max-w-xl">
                 <p className="font-semibold text-center mb-5">Welcome Back, Login</p>
                 <label htmlFor="username">Username:</label>
                 <input type='text' id="username" name="username" placeholder="Enter Username" value={username} className="mb-2 p-2 border rounded-lg" onChange={handleChange} required/>
                 <label htmlFor="password">Password:</label>
                 <input type="password" id="password" name="password" placeholder="Enter password" value={password} className="mb-3 p-2 border rounded-lg" onChange={handleChange} required/>
-                <input type="submit" className=" rounded-lg bg-black text-white p-3" />
+                <input type="submit" className=" rounded-lg bg-black text-white p-3 mt-4" />
             </form>
         </div>
     )
