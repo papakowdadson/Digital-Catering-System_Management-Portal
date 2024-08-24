@@ -36,7 +36,7 @@ const OrdersPage = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <CustomOrdersTable
         data={allOrder}
         loading={loading}

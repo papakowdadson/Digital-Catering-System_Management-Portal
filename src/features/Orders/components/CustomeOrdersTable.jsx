@@ -113,7 +113,7 @@ export default function CustomOrdersTable({
   );
 
   return (
-    <div className=" mt-2">
+    <div className=" mt-2 mx-auto max-w-6xl border rounded-lg p-2">
       <Table
         autoHeight
         data={newData}
