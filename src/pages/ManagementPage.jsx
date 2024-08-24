@@ -16,11 +16,14 @@ const ManagementPage = () => {
     owner: "",
   });
 
+  const { title, desc, img, categories, size, color, price } = product;
+
+
   const handleCheckboxChange = (e) => {
     const { name, checked, value } = e.target;
     setProduct((prev) => {
       const newCategories = [...prev.categories];
-      const newSize = prev.size;
+      let newSize = prev.size;
 
       if (name === "categories") {
         if (checked) {
@@ -35,14 +38,15 @@ const ManagementPage = () => {
       }
 
       if (name === "size") {
+        console.log("checkbxx value", value);
+
         newSize = checked ? value : "";
       }
-      
+
       return { ...prev, size: checked ? value : "", categories: newCategories };
     });
   };
 
-  const { title, desc, img, categories, size, color, price } = product;
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -144,7 +148,7 @@ const ManagementPage = () => {
               type="checkbox"
               value="Breakfast"
               name="categories"
-              checked={categories.includes("Breakfast")}
+              checked={product.categories.includes("Breakfast")}
               onChange={handleChange}
             />
             <label className="ml-2">Breakfast</label>
@@ -155,7 +159,7 @@ const ManagementPage = () => {
               type="checkbox"
               name="categories"
               value="Lunch"
-              checked={categories.includes("Lunch")}
+              checked={product.categories.includes("Lunch")}
               onChange={handleChange}
             />
             <label className="ml-2">Lunch</label>
@@ -166,7 +170,7 @@ const ManagementPage = () => {
               type="checkbox"
               value="Supper"
               name="categories"
-              checked={categories.includes("Supper")}
+              checked={product.categories.includes("Supper")}
               onChange={handleChange}
             />
             <label className="ml-2">Supper</label>
@@ -180,7 +184,7 @@ const ManagementPage = () => {
               type="checkbox"
               value="Small"
               name="size"
-              checked={size === "Small"}
+              checked={product.size === "Small"}
               onChange={handleChange}
             />
             <label className="ml-2">Small</label>
@@ -191,7 +195,7 @@ const ManagementPage = () => {
               type="checkbox"
               value="Large"
               name="size"
-              checked={size === "Large"}
+              checked={product.size === "Large"}
               onChange={handleChange}
             />
             <label className="ml-2">Large</label>
