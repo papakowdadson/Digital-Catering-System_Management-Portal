@@ -216,9 +216,9 @@ const ManagementPage = () => {
           className=" rounded-lg bg-black text-white p-3 mt-4"
         />
       </form>
-      
-      <p className="text-center font-medium mb-2 mt-2">Store Listing</p>
-      <p className="text-center font-medium">Coming Soon</p>
+
+      <p className="text-center font-medium mb-2 mt-4">Store Listing</p>
+      <p className="text-center">Coming Soon</p>
 
     </div>
   );
