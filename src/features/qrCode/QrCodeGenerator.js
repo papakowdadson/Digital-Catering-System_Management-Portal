@@ -29,9 +29,9 @@ function QrCodeGenerator() {
   };
 
   return (
-    <div className="p-4 rounded-lg border">
-      <h1 className="text-center font-semibold">QR Code Generator</h1>
-      <div className="rounded-lg border" ref={qrCodeRef}>
+    <div className="p-4 rounded-lg border min-w-[500px]">
+      <h1 className="text-center font-semibold mb-2">QR Code Generator</h1>
+      <div className="rounded-lg border p-2" ref={qrCodeRef}>
         {!qrIsVisible && (
           <div className="flex flex-col">
             <input className="mb-2 p-2 border rounded-lg"
@@ -46,7 +46,7 @@ function QrCodeGenerator() {
         )}
         {qrIsVisible && (
           <div className="flex flex-col">
-            <div className="rounded-lg border">
+            <div className="rounded-lg border p-2">
               <QRCode value={url} size={300} />
             </div>
             <button className=" rounded-lg bg-black text-white p-3 mt-4" onClick={downloadQRCode}>

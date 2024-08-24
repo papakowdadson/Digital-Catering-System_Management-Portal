@@ -9,26 +9,37 @@ const ManagementPage = () => {
     title: "",
     desc: "",
     img: "",
-    categories: "Breakfast",
+    categories: ["Breakfast"],
     size: "Small",
     color: "black",
     price: "",
     owner: "",
   });
-  const [isChecked, setIsChecked] = useState({
-    isBreakfast: true,
-    isLunch: false,
-    isSupper: false,
-    isSmall: true,
-    isLarge: false,
-  });
-
-  const { isBreakfast, isLunch, isSupper, isSmall, isLarge } = isChecked;
 
   const handleCheckboxChange = (e) => {
-    console.log("type", e.target.name);
-    setIsChecked((prev) => ({ ...prev, [e.target.name]: e.target.checked }));
-    // Do something with the new checkbox state (isChecked)
+    const { name, checked, value } = e.target;
+    setProduct((prev) => {
+      const newCategories = [...prev.categories];
+      const newSize = prev.size;
+
+      if (name === "categories") {
+        if (checked) {
+          newCategories.push(value);
+        } else {
+          const index = newCategories.indexOf(value);
+          if (index > -1) {
+            newCategories.splice(index, 1);
+          }
+        }
+        return { ...prev, categories: newCategories };
+      }
+
+      if (name === "size") {
+        return { ...prev, size: checked ? value : "" };
+      }
+
+      return prev;
+    });
   };
 
   const { title, desc, img, categories, size, color, price } = product;
@@ -36,9 +47,10 @@ const ManagementPage = () => {
   const handleChange = (e) => {
     e.preventDefault();
     console.log(`${[e.target.id]} :${e.target.value}`);
-    setProduct((prev) => ({ ...prev, [e.target.id]: e.target.value }));
     if (e.target.type == "checkbox") {
       handleCheckboxChange(e);
+    } else {
+      setProduct((prev) => ({ ...prev, [e.target.id]: e.target.value }));
     }
   };
 
@@ -131,19 +143,19 @@ const ManagementPage = () => {
               id="categories"
               type="checkbox"
               value="Breakfast"
-              name="isBreakfast"
-              checked={isBreakfast}
+              name="categories"
+              checked={categories.includes("Breakfast")}
               onChange={handleChange}
             />
-            <label className="ml-2" >Breakfast</label>
+            <label className="ml-2">Breakfast</label>
           </div>
           <div className="flex mr-3">
             <input
               id="categories"
               type="checkbox"
-              name="isLunch"
+              name="categories"
               value="Lunch"
-              checked={isLunch}
+              checked={categories.includes("Lunch")}
               onChange={handleChange}
             />
             <label className="ml-2">Lunch</label>
@@ -153,8 +165,8 @@ const ManagementPage = () => {
               id="categories"
               type="checkbox"
               value="Supper"
-              name="isSupper"
-              checked={isSupper}
+              name="categories"
+              checked={categories.includes("Supper")}
               onChange={handleChange}
             />
             <label className="ml-2">Supper</label>
@@ -167,8 +179,8 @@ const ManagementPage = () => {
               id="size"
               type="checkbox"
               value="Small"
-              name="isSmall"
-              checked={isSmall}
+              name="size"
+              checked={size === "Small"}
               onChange={handleChange}
             />
             <label className="ml-2">Small</label>
@@ -178,8 +190,8 @@ const ManagementPage = () => {
               id="size"
               type="checkbox"
               value="Large"
-              name="isLarge"
-              checked={isLarge}
+              name="size"
+              checked={size === "Large"}
               onChange={handleChange}
             />
             <label className="ml-2">Large</label>
@@ -204,6 +216,10 @@ const ManagementPage = () => {
           className=" rounded-lg bg-black text-white p-3 mt-4"
         />
       </form>
+      
+      <p className="text-center font-medium mb-2 mt-2">Store Listing</p>
+      <p className="text-center font-medium">Coming Soon</p>
+
     </div>
   );
 };
