@@ -18,38 +18,23 @@ const ManagementPage = () => {
 
   const { title, desc, img, categories, size, color, price } = product;
 
-
   const handleCheckboxChange = (e) => {
     const { name, checked, value } = e.target;
     setProduct((prev) => {
-      const newCategories = [...prev.categories];
-      let newSize = prev.size;
-
       if (name === "categories") {
-        if (checked) {
-          console.log("checkb0x value", value);
-          newCategories.push(value);
-        } else {
-          const index = newCategories.indexOf(value);
-          if (index > -1) {
-            newCategories.splice(index, 1);
-          }
-        }
+        const newCategories = checked
+          ? [...prev.categories, value]
+          : prev.categories.filter((category) => category !== value);
+        return { ...prev, categories: newCategories };
       }
-
       if (name === "size") {
-        console.log("checkbxx value", value);
-
-        newSize = checked ? value : "";
+        return { ...prev, size: checked ? value : "" };
       }
-
-      return { ...prev, size: checked ? value : "", categories: newCategories };
+      return prev;
     });
   };
 
-
   const handleChange = (e) => {
-    e.preventDefault();
     console.log(`${[e.target.id]} :${e.target.value}`);
     if (e.target.type == "checkbox") {
       handleCheckboxChange(e);
