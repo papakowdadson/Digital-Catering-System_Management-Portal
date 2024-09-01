@@ -2,9 +2,30 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../context/userContext";
 import { toast } from "react-toastify";
+import useManagement from "../hooks/useManagement";
+import CustomManagementTable from "../features/Management/components/CustomeManagementTable";
+import CustomMenuModal from "../features/Management/components/customMenuModal";
 
 const ManagementPage = () => {
   const { user } = useContext(UserContext);
+  const { allMenu, loading } = useManagement();
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState({});
+
+  const handleOpen = () => {
+    setShowModal((prev) => !prev);
+  };
+
+  const displayModal = (id) => {
+    console.log("id", id);
+    const newData = allMenu.filter((menu) => menu._id == id)[0];
+    console.log("newData", newData);
+
+    setModalData(newData);
+    setShowModal((prev) => !prev);
+  };
+
   const [product, setProduct] = useState({
     title: "",
     desc: "",
@@ -13,7 +34,6 @@ const ManagementPage = () => {
     size: "Small",
     color: "black",
     price: "",
-    owner: "",
   });
 
   const { title, desc, img, categories, size, color, price } = product;
@@ -58,7 +78,7 @@ const ManagementPage = () => {
       );
       if (response.status === 200) {
         console.log("add res", response);
-        toast.error("Couldn't Add Dish", {
+        toast.success("Dish Added", {
           position: toast.POSITION.TOP_CENTER,
         });
         setProduct({
@@ -69,21 +89,20 @@ const ManagementPage = () => {
           size: "Small",
           color: "black",
           price: "",
-          owner: "admin",
         });
       }
     } catch (error) {
-      toast.error("Couldn't Add Dish", {
+      toast.error(`${error.message}`, {
         position: toast.POSITION.TOP_CENTER,
       });
-      console.log("error", error);
+      console.log("error", error.message);
     }
   };
 
   return (
     <div className="pt-1 pr-1 pl-1 flex flex-col">
       <p className="text-center font-medium">Add a dish</p>
-      <form onSubmit={handleAddDish} className="flex flex-col w-6/12 m-auto">
+      <form onSubmit={handleAddDish} className="flex flex-col w-full max-w-5xl m-auto">
         <div className="flex flex-col mb-2">
           <label htmlFor="title">Dish Name</label>
           <input
@@ -93,7 +112,7 @@ const ManagementPage = () => {
             value={title}
             onChange={handleChange}
             placeholder="Enter dish name"
-            class="border focus:border-black outline-none px-4 py-2 rounded-lg"
+            className="border focus:border-black outline-none px-4 py-2 rounded-lg"
             required
           />
         </div>
@@ -107,7 +126,7 @@ const ManagementPage = () => {
             value={desc}
             onChange={handleChange}
             placeholder="Enter dish description"
-            class="border focus:border-black outline-none px-4 py-2 rounded-lg"
+            className="border focus:border-black outline-none px-4 py-2 rounded-lg"
             required
           />
         </div>
@@ -195,7 +214,7 @@ const ManagementPage = () => {
             value={price}
             onChange={handleChange}
             placeholder="Enter Price"
-            class="border focus:border-black outline-none px-4 py-2 rounded-lg"
+            className="border focus:border-black outline-none px-4 py-2 rounded-lg"
             required
           />
         </div>
@@ -206,8 +225,19 @@ const ManagementPage = () => {
         />
       </form>
 
-      <p className="text-center font-medium mb-2 mt-4">Store Listing</p>
-      <p className="text-center">Coming Soon</p>
+      <p className="text-center font-medium mb-2 mt-10">Store Listing</p>
+      <CustomManagementTable
+        data={allMenu}
+        loading={loading}
+        actionText="Edit"
+        myFunction={displayModal}
+      />
+      <CustomMenuModal
+        open={showModal}
+        handleOpen={handleOpen}
+        data={modalData}
+        setData={setModalData}
+      />
     </div>
   );
 };

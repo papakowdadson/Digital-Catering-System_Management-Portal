@@ -50,7 +50,7 @@ function QrCodeGenerator() {
               <QRCode value={url} size={300} />
             </div>
             <button className=" rounded-lg bg-black text-white p-3 mt-4" onClick={downloadQRCode}>
-              Download Restaurant QR Code
+              Scan and Order
             </button>
           </div>
         )}
