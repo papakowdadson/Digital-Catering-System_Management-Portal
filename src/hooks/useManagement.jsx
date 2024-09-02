@@ -43,6 +43,7 @@ const useManagement = () => {
     console.log("_id", _id);
 
     const updatableFeild = {
+      title: data.title,
       price: data.price,
       img: data.img,
     };

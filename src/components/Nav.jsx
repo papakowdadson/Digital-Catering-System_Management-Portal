@@ -15,7 +15,7 @@ const Nav = () => {
   return (
     user&&
     <div className="flex justify-between pt-2 mb-8 pl-2 pr-2 items-center">
-      <div className="font-semibold">
+      <div className="font-semibold text-2xl">
         K<span className=" text-blue-400">Foods</span> 
       </div>
       <div className="w-6/12 flex justify-evenly border rounded-lg p-2">
