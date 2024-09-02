@@ -65,11 +65,21 @@ const ManagementPage = () => {
 
   const handleAddDish = async (e) => {
     e.preventDefault();
-    console.log(product);
+
+    const data = {
+      "name": title,
+      "description": desc,
+      "image": img,
+      "category": categories,
+      "size": size,
+      "color": color,
+      "price": price,
+    };
+    console.log(data);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/products/create`,
-        product,
+        data,
         {
           headers: {
             Authorization: "Bearer " + user.accessToken,
@@ -102,7 +112,10 @@ const ManagementPage = () => {
   return (
     <div className="pt-1 pr-1 pl-1 flex flex-col">
       <p className="text-center font-medium">Add a dish</p>
-      <form onSubmit={handleAddDish} className="flex flex-col w-full max-w-5xl m-auto">
+      <form
+        onSubmit={handleAddDish}
+        className="flex flex-col w-full max-w-5xl m-auto"
+      >
         <div className="flex flex-col mb-2">
           <label htmlFor="title">Dish Name</label>
           <input
