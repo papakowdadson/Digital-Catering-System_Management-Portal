@@ -15,7 +15,7 @@ const OrdersPage = () => {
     try {
       const data = { Status: "accepted" };
       const response = await axios.put(
-        `http://localhost:5000/api/orders/${_id}`,
+        `${process.env.REACT_APP_BASE_URL}/api/orders/${_id}`,
         data,
         {
           headers: {
