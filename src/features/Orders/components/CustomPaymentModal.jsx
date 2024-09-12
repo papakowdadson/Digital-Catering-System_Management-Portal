@@ -25,7 +25,6 @@ import React, {
        e.preventDefault();
        setIsLoading(true);
        const data = { "externalId": uniqueId};
-
        try {
         const paymentResponse = await axios.post(
           `${process.env.REACT_APP_PAYMENT_URL}/payment/verifyPayment`,
@@ -49,7 +48,7 @@ import React, {
         console.log('Server error',error)
         setTimeout(() => {
         }, 3000);
-        toast.error("Please approve payment", {
+        toast.error(`${error.response.data.reason}`??'Please approve payment', {
           position: toast.POSITION.TOP_RIGHT,
         });
       }finally{
@@ -127,7 +126,7 @@ import React, {
                   name="number"
                   onChange={(value) => handleChange("number", value)}
                   required={true}
-                  placeholder={"Enter Momo number"}
+                  placeholder={"0XXXXXXXXX"}
                 /> 
               </form>
             </Modal.Body>
