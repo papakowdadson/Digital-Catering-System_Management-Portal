@@ -1,19 +1,29 @@
 import axios from "axios";
 import CustomOrdersTable from "../features/Orders/components/CustomeOrdersTable";
+import CustomPaymentModal from "../features/Orders/components/CustomPaymentModal"
 import useOrders from "../hooks/useOrders";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../context/userContext";
 import { toast } from "react-toastify";
 
 const OrdersPage = () => {
   const { user } = useContext(UserContext);
   const { allOrder, setAllOrders, loading, acceptOrders } = useOrders();
+  const [showModal,setShowModal] = useState(false);
+  const [modalInput,setModalInput] = useState({id:"",amount:""});
 
-  const acceptOrder = async (_id) => {
+  const showPaymentModal = (id,amount) =>{
+    setShowModal((prev)=>!prev);
+    setModalInput((prev)=>({...prev,'id':id,'amount':amount}));
+  }
+
+
+
+  const acceptOrder = async (_id,message) => {
     console.log("accepting Token", user.accessToken);
     console.log("accepting id", _id);
     try {
-      const data = { Status: "accepted" };
+      const data = { Status:message?? "accepted" };
       const response = await axios.put(
         `${process.env.REACT_APP_BASE_URL}/api/orders/${_id}`,
         data,
@@ -25,13 +35,16 @@ const OrdersPage = () => {
       );
       if (response.status === 200) {
         // add toast
-        acceptOrders(_id);
-        toast.success("Order Accepted", {
+        acceptOrders(_id,message);
+        toast.success(`Order ${message}`, {
           position: toast.POSITION.TOP_CENTER,
         });
       }
     } catch (error) {
       console.log("error accepting orders");
+      toast.error(`${error.message}`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 
@@ -42,7 +55,9 @@ const OrdersPage = () => {
         loading={loading}
         myFunction={acceptOrder}
         actionText={"Accept"}
+        showPaymentModal={showPaymentModal}
       />
+      {showModal&&<CustomPaymentModal data={modalInput} open={showModal} handleOpen={showPaymentModal} myFunction={acceptOrder} />}
     </div>
   );
 };

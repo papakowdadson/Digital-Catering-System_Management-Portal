@@ -36,12 +36,12 @@ const useOrders = () => {
     }
   };
 
-  const acceptOrders = (_id) => {
+  const acceptOrders = (_id,message) => {
     console.log("===========filtering orders===========");
     setAllOrders((prev) =>
       prev.map((item) => {
         if (item._id === _id) {
-          return { ...item, Status: "accepted" };
+          return { ...item, Status:message?? "accepted" };
         } else {
           return item;
         }

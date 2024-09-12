@@ -65,6 +65,7 @@ export default function CustomOrdersTable({
   myFunction,
   loading,
   actionText,
+  showPaymentModal,
 }) {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
@@ -104,10 +105,10 @@ export default function CustomOrdersTable({
   const ButtonCell = ({ rowData, dataKey, ...props }) => (
     <Cell {...props}>
       <Button
-        onClick={() =>rowData['Status']==='pending'?myFunction(rowData[dataKey]):null}
-        appearance={rowData['Status']==='pending'?"primary":'default'}
+        onClick={() =>rowData['Status']==='pending'?myFunction(rowData[dataKey],'accepted'):rowData['Status']==='accepted'?showPaymentModal(rowData[dataKey],rowData['amount']):null}
+        appearance={(rowData['Status']==='pending'||rowData['Status']==='accepted')?"primary":'default'}
       >
-        {rowData['Status']==='pending'?actionText:'Accepted'}
+        {rowData['Status']==='pending'?actionText:rowData['Status']==='accepted'?'Momo Pay':'Paid'}
       </Button>
     </Cell>
   );
