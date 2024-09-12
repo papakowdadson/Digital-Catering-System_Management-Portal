@@ -51,7 +51,7 @@ export default function CustomManagementTable({
         loading={loading}
         rowKey={rowKey}
         onRowClick={(data) => {
-          console.log(data);
+          // console.log(data);
         }}
       >
         <Column minWidth={150} flexGrow={2} align="left" fullText={true} fixed>

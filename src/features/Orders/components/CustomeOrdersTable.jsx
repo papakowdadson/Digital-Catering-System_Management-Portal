@@ -124,7 +124,7 @@ export default function CustomOrdersTable({
         expandedRowKeys={expandedRowKeys}
         rowExpandedHeight={120}
         onRowClick={(data) => {
-          console.log(data);
+          // console.log(data);
         }}
         renderRowExpanded={renderRowExpanded}
       >
