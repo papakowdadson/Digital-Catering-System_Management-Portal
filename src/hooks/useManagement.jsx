@@ -13,7 +13,6 @@ const useManagement = () => {
   }, []);
 
   const fetchData = async () => {
-    console.log("access token", user.accessToken);
     setLoading(true);
     try {
       const response = await axios.get(
@@ -25,11 +24,9 @@ const useManagement = () => {
         }
       );
       if (response.status == 200) {
-        console.log("fetch product data", response.data);
         setAllMenus(response.data);
       }
     } catch (error) {
-      console.log("fetch product error", error);
       toast.error(`${error.message}`, {
         position: toast.POSITION.TOP_LEFT,
       });
@@ -39,15 +36,12 @@ const useManagement = () => {
   };
 
   const updateMenu = async (_id, data) => {
-    console.log("access token", user.accessToken);
-    console.log("_id", _id);
 
     const updatableFeild = {
       title: data.title,
       price: data.price,
       img: data.img,
     };
-    console.log("data", updatableFeild);
 
     setLoading(true);
     try {
@@ -63,7 +57,6 @@ const useManagement = () => {
       );
       if (response.status == 200) {
         const newMenu = allMenu.map((menu)=>menu._id==_id?{...menu,...updatableFeild}:menu)
-        console.log('newmunu',newMenu)
         setAllMenus(newMenu);
         toast.success("Menu Updated !", {
           position: toast.POSITION.TOP_CENTER,
@@ -71,7 +64,6 @@ const useManagement = () => {
       }
       // setAllMenus(MenusData)
     } catch (error) {
-      console.log("updating data error", error.message);
       toast.error(`${error.message}`, {
         position: toast.POSITION.TOP_LEFT,
       });

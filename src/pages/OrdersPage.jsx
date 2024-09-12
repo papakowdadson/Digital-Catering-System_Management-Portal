@@ -20,8 +20,6 @@ const OrdersPage = () => {
 
 
   const acceptOrder = async (_id,message) => {
-    console.log("accepting Token", user.accessToken);
-    console.log("accepting id", _id);
     try {
       const data = { Status:message?? "accepted" };
       const response = await axios.put(
@@ -41,7 +39,6 @@ const OrdersPage = () => {
         });
       }
     } catch (error) {
-      console.log("error accepting orders");
       toast.error(`${error.message}`, {
         position: toast.POSITION.TOP_CENTER,
       });

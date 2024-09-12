@@ -11,10 +11,7 @@ import axios from "axios";
 import useManagement from "../../../hooks/useManagement";
 
 const CustomMenuModal = ({ open, handleOpen, data,setData }) => {
-  const { updateMenu } = useManagement();
-
-  console.log('modal img',data.price)
-  
+  const { updateMenu } = useManagement();  
 
   const { _id, img, title, price } = data;
 

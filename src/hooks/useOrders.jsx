@@ -13,7 +13,6 @@ const useOrders = () => {
   }, []);
 
   const fetchData = async () => {
-    console.log("access token", user.accessToken);
     setLoading(true);
     try {
       const response = await axios.get(
@@ -31,13 +30,11 @@ const useOrders = () => {
       // setAllOrders(OrdersData)
       setLoading(false);
     } catch (error) {
-      console.log("fetch data error", error);
       setLoading(false);
     }
   };
 
   const acceptOrders = (_id,message) => {
-    console.log("===========filtering orders===========");
     setAllOrders((prev) =>
       prev.map((item) => {
         if (item._id === _id) {

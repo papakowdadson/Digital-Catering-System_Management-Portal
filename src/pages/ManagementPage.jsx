@@ -18,9 +18,7 @@ const ManagementPage = () => {
   };
 
   const displayModal = (id) => {
-    console.log("id", id);
     const newData = allMenu.filter((menu) => menu._id == id)[0];
-    console.log("newData", newData);
 
     setModalData(newData);
     setShowModal((prev) => !prev);
@@ -55,7 +53,6 @@ const ManagementPage = () => {
   };
 
   const handleChange = (e) => {
-    console.log(`${[e.target.id]} :${e.target.value}`);
     if (e.target.type == "checkbox") {
       handleCheckboxChange(e);
     } else {
@@ -75,7 +72,6 @@ const ManagementPage = () => {
       "color": color,
       "price": price,
     };
-    console.log(data);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/products/create`,
@@ -87,7 +83,6 @@ const ManagementPage = () => {
         }
       );
       if (response.status === 200) {
-        console.log("add res", response);
         toast.success("Dish Added", {
           position: toast.POSITION.TOP_CENTER,
         });
@@ -105,7 +100,6 @@ const ManagementPage = () => {
       toast.error(`${error.message}`, {
         position: toast.POSITION.TOP_CENTER,
       });
-      console.log("error", error.message);
     }
   };
 

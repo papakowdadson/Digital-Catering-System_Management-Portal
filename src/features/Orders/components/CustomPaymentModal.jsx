@@ -13,7 +13,6 @@ import React, {
     const [isLoading, setIsLoading] = useState(false);
     const [uniqueId, setUniqueId] = useState("");
   
-    console.log('modal img',data.amount)
     const { id, amount} = data;
     const {number} = input;
     
@@ -45,7 +44,6 @@ import React, {
           handleMenuOpen(); 
         }
       } catch (error) {
-        console.log('Server error',error)
         setTimeout(() => {
         }, 3000);
         toast.error(`${error.response.data.reason}`??'Please approve payment', {
@@ -59,7 +57,6 @@ import React, {
     const handlePayment = async() =>{
         setIsLoading(true);
         const _uid = uuidv4();
-        console.log('uuid',_uid);
         setUniqueId(_uid);
 
         const data = {
@@ -74,7 +71,6 @@ import React, {
             "payerMessage": "K Food Payment",
           };
 
-        console.log('data',data)
 
           try {
             const paymentResponse = await axios.post(
@@ -83,7 +79,6 @@ import React, {
             );
             if (paymentResponse.status == 200) {
               setisVerified(true);
-              console.log("Payment initiation response",paymentResponse.data)
               toast.success("Payment initiated, Complete transaction offline using my approvals", {
                 position: toast.POSITION.TOP_RIGHT,
               });

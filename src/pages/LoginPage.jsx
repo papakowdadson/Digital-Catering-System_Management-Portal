@@ -27,13 +27,11 @@ const LoginPage = () => {
         userInput
       );
       if (response.status === 200) {
-        console.log("login res", response);
         setUser(response.data);
         setLocalUser(response.data);
         navigate("/orders");
       }
     } catch (error) {
-      console.log("error", error.message);
       toast.error("Error Signing in", {
         position: toast.POSITION.TOP_CENTER,
       });
